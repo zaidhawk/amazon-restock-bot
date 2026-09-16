@@ -1,0 +1,22 @@
+﻿# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Amazon persistent profile (CONTAINS PRIVATE LOGIN COOKIES & SESSIONS)
+amazon_profile/
+test_profile/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS artifacts
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Logs
+*.log
