@@ -1,0 +1,14 @@
+﻿{
+  "product_url": "https://www.amazon.ca/Nintendo-SwitchTM-Legend-ZeldaTM-Anniversary/dp/B0HJ6F8L6V",
+  "asin": "B0HJ6F8L6V",
+  "product_title": "Nintendo Switch 2 - The Legend of Zelda 40th Anniversary Limited Edition",
+  "max_price_cad": 720.00,
+  "check_interval_seconds_min": 4,
+  "check_interval_seconds_max": 7,
+  "user_data_dir": "./amazon_profile",
+  "headless": false,
+  "auto_click_buy_now": true,
+  "only_ships_from_amazon": true,
+  "block_heavy_images": true,
+  "sound_alert_duration_seconds": 30
+}
