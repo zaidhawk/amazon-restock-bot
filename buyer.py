@@ -14,12 +14,44 @@ class Buyer:
         self.notifier = notifier
         self.auto_click_buy_now = auto_click_buy_now
 
+    def handle_prime_upsell(self, page: Page) -> bool:
+        """
+        If the account does not have Amazon Prime, Amazon will show a Prime upgrade page. This will detect that screen and click the 'No Thanks' button.
+        """
+        try:
+            # Check for 'No thanks' link / button
+            no_thanks = page.query_selector(
+                'a:has-text("No thanks"), '
+                'button:has-text("No thanks"), '
+                'span:has-text("No thanks"), '
+                '#prime-interstitial-nothanks-button, '
+                'input[name*="noThanks" i], '
+                '[data-action="page-spinner-action"]:has-text("No thanks")'
+            )
+            if no_thanks and no_thanks.is_visible():
+                print("[Checkout] Prime upsell detected. Automatically clicking 'No thanks'...")
+                no_thanks.click()
+                page.wait_for_timeout(2000)
+                return True
+
+            # Fallback text locator
+            no_thanks_loc = page.get_by_text("No thanks", exact=False)
+            if no_thanks_loc.count() > 0 and no_thanks_loc.first.is_visible():
+                print("[Checkout] Prime upsell detected via text locator. Clicking 'No thanks'...")
+                no_thanks_loc.first.click()
+                page.wait_for_timeout(2000)
+                return True
+        except Exception as e:
+            print(f"[Checkout] Prime upsell bypass check: {e}")
+
+        return False
+
     def attempt_checkout(self, page: Page, product_title: str, price_str: str) -> bool:
         """
-        Executes semi-automated checkout:
-        Attempts to click Buy Now or Add to Cart -> Proceed to Checkout,
-        then alerts the user with high-priority audio & desktop notification
-        at the final review screen.
+        Executes automated checkout uptill the final checkout page.
+        Attempts to click "Buy Now" or "Add to Card", then "Proceed to Checkout"
+        Then alerts with Audio and Desktop notification
+        
         """
         print("\n" + "#" * 60)
         print("[!] INITIATING RAPID CHECKOUT FLOW...")
@@ -40,6 +72,8 @@ class Buyer:
                 buy_now_btn.click()
                 page.wait_for_timeout(2000)
                 print("[Checkout] Buy Now triggered! Inspecting current screen...")
+                # Automatically bypass Prime upgrade page if account does not have Amazon Prime
+                self.handle_prime_upsell(page)
             except Exception as e:
                 print(f"[Checkout] Error clicking Buy Now: {e}")
 
@@ -69,6 +103,9 @@ class Buyer:
                     page.wait_for_timeout(2500)
                 except Exception as e:
                     print(f"[Checkout] Error clicking Proceed to Checkout: {e}")
+
+        # Check again in case Prime upsell appeared after cart navigation
+        self.handle_prime_upsell(page)
 
         # Semi-automated guard: DO NOT automatically click 'Place your order'
         print("\n" + "*" * 60)
