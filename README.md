@@ -1,6 +1,6 @@
 ﻿# Amazon Canada Stock Monitor & Rapid Checkout Bot
 
-Automated checkout helper specifically configured for the Nintendo Switch 2 – The Legend of Zelda 40th Anniversary Limited Edition on Amazon.ca
+Automated checkout helper that will help with anything you need on Amazon.ca, that is Sold and Shipped by Amazon. Paste the Amazon URL link of the product you are trying to buy into the "product_url" value in the config.json file.
 
 ---
 
