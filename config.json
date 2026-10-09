@@ -10,11 +10,5 @@
   "auto_click_buy_now": true,
   "only_ships_from_amazon": true,
   "block_heavy_images": true,
-  "sound_alert_duration_seconds": 30,
-  "payment_plan": {
-    "enabled": false,
-    "card_name": "Amazon.ca Rewards Mastercard",
-    "card_last4": "9245",
-    "preferred_option_text": "12 equal monthly payments"
-  }
+  "sound_alert_duration_seconds": 30
 }

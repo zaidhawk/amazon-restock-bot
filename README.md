@@ -1,55 +1,21 @@
-﻿# Amazon Canada Stock Monitor & Rapid Checkout Bot
+# Amazon Restock Bot
 
-Automated checkout helper that will help with anything you need on Amazon.ca, that is Sold and Shipped by Amazon. Paste the Amazon URL link of the product you are trying to buy into the "product_url" value in the config.json file.
+A bot that watches an Amazon.ca product page and buys it automatically as soon as it comes back in stock.
 
----
+## 1. Log in (one time only)
 
-### Step 1: One-Time Account Login 
-Login to Amazon account after running login.bat:
-```powershell
-.\login.bat
-```
-*(Or run `.\venv\Scripts\python.exe login.py`)*
-1. An official Chromium browser window will open to `https://www.amazon.ca`.
-2. Sign in with your Amazon account, solve any 2FA/OTP code.
-3. Return to the terminal and press **Enter** to save your session.
+Run `login.bat`. A browser window will open. Sign in to your Amazon account, then go back to the terminal and press Enter. Your login is saved, so you only need to do this once.
 
-### Step 2: Start the Bot
-```powershell
-.\start_bot.bat
-```
-*(Or run `.\venv\Scripts\python.exe run.py`)*
+## 2. Start the bot
 
----
+Run `start_bot.bat`. The bot will keep checking the product page and place the order when it's in stock.
 
-You can edit `config.json` at any time to adjust parameters:
+## Choosing a product
+
+Open `config.json` and paste the Amazon link of the product you want into `product_url`:
 
 ```json
-{
-  "product_url": "https://www.amazon.ca/Nintendo-SwitchTM-Legend-ZeldaTM-Anniversary/dp/B0HJ6F8L6V",
-  "asin": "B0HJ6F8L6V",
-  "product_title": "Nintendo Switch 2 - The Legend of Zelda 40th Anniversary Limited Edition",
-  "max_price_cad": 720.00,
-  "check_interval_seconds_min": 5,
-  "check_interval_seconds_max": 10,
-  "user_data_dir": "./amazon_profile",
-  "headless": false,
-  "auto_click_buy_now": true,
-  "only_ships_from_amazon": true,
-  "sound_alert_duration_seconds": 30
-}
+"product_url": "https://www.amazon.ca/your-product-link"
 ```
 
-### Safety Features
-- **Max Price Filter (`max_price_cad`)**: Prevents buying from a third party seller attempting to scalp.
-- **Retailer Filter (`only_ships_from_amazon`)**: Filters out third-party marketplace sellers so you only buy directly from Amazon.ca.
-- **Semi-Automated Checkout (`auto_click_buy_now`)**: Automatically clicks "Buy Now" or "Add to Cart" -> "Proceed to Checkout", then halts at the order review screen for you to confirm and place your order.
-- **Jittered Polling**: Randomizes request delays (5-10s) and hides automation markers to prevent anti-bot detection.
-
----
-
-## Notifications
-When stock drops:
-1. **Audio Alarm**: Plays an alarm on Windows speakers..
-2. **Windows Notification**: Displays a notification with the detected price.
-3. **Active Checkout**: Brings the browser to the front with the item ready for confirmation.
+Also set `max_price_cad` to the most you're willing to pay, so the bot won't buy from a scalper.

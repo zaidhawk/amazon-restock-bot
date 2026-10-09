@@ -4,7 +4,7 @@ env/
 ENV/
 .venv/
 
-# Amazon persistent profile (CONTAINS PRIVATE LOGIN COOKIES & SESSIONS)
+# Amazon profile 
 amazon_profile/
 test_profile/
 

@@ -75,12 +75,15 @@ class StockMonitor:
             has_active_button = True
 
         # Determine stock presence
-        if "currently unavailable" in avail_text or "we don't know when or if this item will be back in stock" in avail_text:
+        # Note: "Temporarily out of stock" pages also say "back in stock", so
+        # out-of-stock phrases must be checked first and text alone isn't trusted.
+        out_of_stock_phrases = ("out of stock", "currently unavailable", "we don't know when or if")
+        if any(p in avail_text for p in out_of_stock_phrases):
             result["in_stock"] = False
-            result["reason"] = "Currently unavailable"
+            result["reason"] = "Out of stock"
             return result
 
-        if not has_active_button and not ("in stock" in avail_text or "pre-order" in avail_text or "available to ship" in avail_text or "will be released" in avail_text):
+        if not has_active_button:
             result["in_stock"] = False
             result["reason"] = "No active checkout buttons found"
             return result
