@@ -1,5 +1,8 @@
 # Amazon Restock Bot
 
+![Bot checking the product page and logging each check](docs/demo.gif)
+
+
 A bot that watches an Amazon.ca product page and buys it automatically as soon as it comes back in stock.
 
 ## 1. Log in (one time only)
